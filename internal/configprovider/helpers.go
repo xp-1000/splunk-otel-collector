@@ -16,12 +16,16 @@
 package configprovider
 
 import (
+	"errors"
+
 	"go.opentelemetry.io/collector/config/experimental/configsource"
 )
 
+var ErrWatcherNotSupported = errors.New("value watcher is not supported")
+
 // WatcherNotSupported is the a watcher function that always returns ErrWatcherNotSupported.
 func WatcherNotSupported() error {
-	return configsource.ErrWatcherNotSupported
+	return ErrWatcherNotSupported
 }
 
 type retrieved struct {

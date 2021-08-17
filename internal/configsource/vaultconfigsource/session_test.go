@@ -31,6 +31,8 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.opentelemetry.io/collector/config/experimental/configsource"
 	"go.uber.org/zap"
+
+	"github.com/signalfx/splunk-otel-collector/internal/configprovider"
 )
 
 const (
@@ -143,7 +145,7 @@ func TestVaultPollingKVUpdate(t *testing.T) {
 	require.NoError(t, s.RetrieveEnd(context.Background()))
 
 	// Only the first retrieved key provides a working watcher.
-	require.Equal(t, configsource.ErrWatcherNotSupported, retrievedK1.WatchForUpdate())
+	require.Equal(t, configprovider.ErrWatcherNotSupported, retrievedK1.WatchForUpdate())
 
 	var watcherErr error
 	var doneCh chan struct{}
@@ -224,7 +226,7 @@ func TestVaultRenewableSecret(t *testing.T) {
 	require.NoError(t, s.RetrieveEnd(context.Background()))
 
 	// Only the first retrieved key provides a working watcher.
-	require.Equal(t, configsource.ErrWatcherNotSupported, retrievedPwd.WatchForUpdate())
+	require.Equal(t, configprovider.ErrWatcherNotSupported, retrievedPwd.WatchForUpdate())
 
 	watcherErr := retrievedUser.WatchForUpdate()
 	require.ErrorIs(t, watcherErr, configsource.ErrValueUpdated)
@@ -372,7 +374,7 @@ func TestVaultV1NonWatchableSecret(t *testing.T) {
 
 	// Wait for update.
 	<-doneCh
-	require.ErrorIs(t, watcherErr, configsource.ErrWatcherNotSupported)
+	require.ErrorIs(t, watcherErr, configprovider.ErrWatcherNotSupported)
 
 	// Close current session.
 	require.NoError(t, s.Close(context.Background()))

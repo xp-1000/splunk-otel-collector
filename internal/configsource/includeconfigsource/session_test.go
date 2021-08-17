@@ -25,7 +25,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"go.opentelemetry.io/collector/config/experimental/configsource"
+
+	"github.com/signalfx/splunk-otel-collector/internal/configprovider"
 )
 
 func TestIncludeConfigSource_Session(t *testing.T) {
@@ -107,7 +108,7 @@ func TestIncludeConfigSource_DeleteFile(t *testing.T) {
 	require.NotNil(t, r)
 	assert.Equal(t, []byte("42"), r.Value())
 
-	assert.Equal(t, configsource.ErrWatcherNotSupported, r.WatchForUpdate())
+	assert.Equal(t, configprovider.ErrWatcherNotSupported, r.WatchForUpdate())
 }
 
 func TestIncludeConfigSource_DeleteFileError(t *testing.T) {

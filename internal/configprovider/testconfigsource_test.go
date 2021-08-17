@@ -66,7 +66,7 @@ func (t *testConfigSource) Retrieve(ctx context.Context, selector string, params
 	}
 
 	watchForUpdateFn := func() error {
-		return configsource.ErrWatcherNotSupported
+		return ErrWatcherNotSupported
 	}
 
 	if entry.WatchForUpdateFn != nil {

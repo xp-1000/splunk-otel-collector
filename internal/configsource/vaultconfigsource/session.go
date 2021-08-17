@@ -318,5 +318,5 @@ func traverseToKey(data map[string]interface{}, key string) interface{} {
 }
 
 func watcherNotSupported() error {
-	return configsource.ErrWatcherNotSupported
+	return configprovider.ErrWatcherNotSupported
 }
